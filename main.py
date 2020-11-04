@@ -12,6 +12,11 @@
 import numpy as np
 import random
 import math
-import skfuzzy as fuzz
+
+from DistanceFunctions import *
+
+#while(true):
+
+
 
 
