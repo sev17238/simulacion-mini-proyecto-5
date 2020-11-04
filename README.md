@@ -26,8 +26,13 @@ This project features:
 
 ## References
 - https://www.geeksforgeeks.org/fuzzy-logic-introduction/
-- https://gist.github.com/ryangmolina/e1c87509b6919ac8aaf3eceb315d3e5e
 - https://www.scientificamerican.com/article/what-is-fuzzy-logic-are-t/
+- https://pythonhosted.org/scikit-fuzzy/auto_examples/plot_tipping_problem_newapi.html
+- https://vpetro.io/fuzzylogic/fuzzy_mehaan_joy.html
+- https://gist.github.com/ryangmolina/e1c87509b6919ac8aaf3eceb315d3e5e
+- https://www.geeksforgeeks.org/horn-clauses-in-deductive-databases/
+- http://aima.cs.berkeley.edu/python/logic.html 
+- https://boxbase.org/entries/2018/oct/8/horn-clauses-imperative-ir/
 
 ## Licence
 No license.

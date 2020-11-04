@@ -5,6 +5,8 @@
 # Diego Sevilla 17238
 # Alejandro Tejada 17584
 ###################################################
+# Module for distance related functions
+###################################################
 
 # Refs:
 # https://gist.github.com/ryangmolina/e1c87509b6919ac8aaf3eceb315d3e5e
