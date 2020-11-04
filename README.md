@@ -25,6 +25,12 @@ This project features:
 4. Choose the 'Draw points' option
 5. After the simulation, erase everything and give it another try.
 
+## Understanding UI
+1. Blue Dot: Robot
+2. Red Dot: Ball
+3. Green Short Line: Goal
+4. Yellow line: Shoot trayectory
+
 ## References
 - https://www.geeksforgeeks.org/fuzzy-logic-introduction/
 - https://www.scientificamerican.com/article/what-is-fuzzy-logic-are-t/
