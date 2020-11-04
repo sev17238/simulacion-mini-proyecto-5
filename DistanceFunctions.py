@@ -2,125 +2,78 @@
 # Guatemala, noviembre del 2020
 ###################################################
 # Modelacion y simulacion
-# Diego Sevilla 17238
 # Alejandro Tejada 17584
+# Diego Sevilla 17238
 ###################################################
-# Module for distance related functions
+# Modulo de funciones para calculos de distancia
 ###################################################
-
 # Refs:
-# https://gist.github.com/ryangmolina/e1c87509b6919ac8aaf3eceb315d3e5e
 # https://pythonhosted.org/scikit-fuzzy/auto_examples/plot_tipping_problem_newapi.html
 # https://vpetro.io/fuzzylogic/fuzzy_mehaan_joy.html
+# https://gist.github.com/ryangmolina/e1c87509b6919ac8aaf3eceb315d3e5e
+# https://www.geeksforgeeks.org/horn-clauses-in-deductive-databases/
+# http://aima.cs.berkeley.edu/python/logic.html 
+# https://boxbase.org/entries/2018/oct/8/horn-clauses-imperative-ir/
 
+######IMPORTS ZONE ---------------------------------------------------------------------------
 import numpy as np
 import random
 import math
+########IMPORTS ZONE --------------------------------------------------------------------------
 
+def turningAngle(robotPosition, ballPosition, robotAngleView):
+    '''returns the angle to turn and the direction of that angle.'''
+    xr, yr = robotPosition
+    xp, yp = ballPosition
+    dy = yp - yr
+    dx = xp - xr
 
-def trimf(x, points):
-    pointA = points[0]
-    pointB = points[1]
-    pointC = points[2]
-    slopeAB = getSlope(pointA, 0, pointB, 1)
-    slopeBC = getSlope(pointB, 1, pointC, 0)
-    result = 0
-    if x >= pointA and x <= pointB:
-        result = slopeAB * x + getYIntercept(pointA, 0, pointB, 1)
-    elif x >= pointB and x <= pointC:
-        result = slopeBC * x + getYIntercept(pointB, 1, pointC, 0)
-    return result
+    angleDirection = math.atan2(dy, dx)
+    distanceTurnRight = 0
+    distanceTurnLeft = 0
+    if angleDirection < 0: angleDirection = math.degrees(angleDirection + 2 * math.pi)
+    else: angleDirection = math.degrees(angleDirection)
 
+    clockwiseDirection = -1
+    opp_clockwiseDirection = 1
 
-def trapmf(x, points):
-    pointA = points[0]
-    pointB = points[1]
-    pointC = points[2]
-    pointD = points[3]
-    slopeAB = getSlope(pointA, 0, pointB, 1)
-    slopeCD = getSlope(pointC, 1, pointD, 0)
-    yInterceptAB = getYIntercept(pointA, 0, pointB, 1)
-    yInterceptCD = getYIntercept(pointC, 1, pointD, 0)
-    result = 0
-    if x > pointA and x < pointB:
-        result = slopeAB * x + yInterceptAB
-    elif x >= pointB and x <= pointC:
-        result = 1
-    elif x > pointC and x < pointD:
-        result = slopeCD * x + yInterceptCD
-    return result
+    ### check turning right distance
+    if  robotAngleView >= angleDirection: distanceTurnRight = robotAngleView - angleDirection
+    else: distanceTurnRight = robotAngleView - (angleDirection - 360)
+    ### check turning left distance
+    if  angleDirection >= robotAngleView: distanceTurnLeft = angleDirection - robotAngleView
+    else: distanceTurnLeft = angleDirection - (robotAngleView - 360)
+    ### returns y angle
+    if distanceTurnRight <= distanceTurnLeft: return distanceTurnRight, clockwiseDirection
+    else: return distanceTurnLeft, opp_clockwiseDirection
 
+def distanceBetweenPoints(p1, p2):
+    '''returns distance between 2 points'''
+    x1, y1 = p1
+    x2, y2 = p2
+    return math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
 
-def getSlope(x1, y1, x2, y2):
-    # Avoid zero division error of vertical line for shouldered trapmf
-    try:
-        slope = (y2 - y1) / (x2 - x1)
-    except ZeroDivisionError:
-        slope = 0
-    return slope
+def distanceToMoveXY(distance, angle):
+    '''returns x and y coordinates to guide robot's destiny'''
+    x = distance * math.cos(math.radians(angle))
+    y = distance * math.sin(math.radians(angle))
+    return x, y
 
+def shootAngleDistance(robotPosition, goalPosition):
+    '''returns angle for goal success'''
+    xr, yr = robotPosition
+    xp, yp = goalPosition
+    dy = yp - yr
+    dx = xp - xr
 
-def getYIntercept(x1, y1, x2, y2):
-    m = getSlope(x1, y1, x2, y2)
-    if y1 < y2:
-        y = y2
-        x = x2
-    else:
-        y = y1
-        x = x1
-    return y - m * x
+    angleDirection = math.atan2(dy, dx)
+    distanceTurnRight = 0
+    distanceTurnLeft = 0
+    if angleDirection < 0: angleDirection = math.degrees(angleDirection + 2 * math.pi)
+    else: angleDirection = math.degrees(angleDirection)
 
+    return angleDirection, abs(xr - xp)
 
-def getTrimfPlots(start, end, points):
-    plots = [0] * (abs(start) + abs(end))
-    pointA = points[0]
-    pointB = points[1]
-    pointC = points[2]
-    slopeAB = getSlope(pointA, 0, pointB, 1)
-    slopeBC = getSlope(pointB, 1, pointC, 0)
-    yInterceptAB = getYIntercept(pointA, 0, pointB, 1)
-    yInterceptBC = getYIntercept(pointB, 1, pointC, 0)
-    for i in range(pointA, pointB):
-        plots[i] = slopeAB * i + yInterceptAB
-    for i in range(pointB, pointC):
-        plots[i] = slopeBC * i + yInterceptBC
-
-    return plots
-
-
-def getTrapmfPlots(start, end, points, shoulder=None):
-    plots = [0] * (abs(start) + abs(end))
-    pointA = points[0]
-    pointB = points[1]
-    pointC = points[2]
-    pointD = points[3]
-    left = 0
-    right = 0
-    slopeAB = getSlope(pointA, 0, pointB, 1)
-    slopeCD = getSlope(pointC, 1, pointD, 0)
-    yInterceptAB = getYIntercept(pointA, 0, pointB, 1)
-    yInterceptCD = getYIntercept(pointC, 1, pointD, 0)
-    if shoulder == "left":
-        for i in range(start, pointA):
-            plots[i] = 1
-    elif shoulder == "right":
-        for i in range(pointD, end):
-            plots[i] = 1
-    for i in range(pointA, pointB):
-        plots[i] = slopeAB * i + yInterceptAB
-    for i in range(pointB, pointC):
-        plots[i] = 1
-    for i in range(pointC, pointD):
-        plots[i] = slopeCD * i + yInterceptCD
-    return plots
-
-
-def getCentroid(aggregatedPlots):
-    n = len(aggregatedPlots)
-    xAxis = list(range(n))
-    centroidNum = 0
-    centroidDenum = 0
-    for i in range(n):
-        centroidNum += xAxis[i] * aggregatedPlots[i]
-        centroidDenum += aggregatedPlots[i]
-    return centroidNum / centroidDenum
+def shootReturnsY(x, angulo):
+    '''returns y point for goal targeting accretion'''
+    return x * math.tan(math.radians(angulo))

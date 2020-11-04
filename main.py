@@ -16,6 +16,7 @@ import random
 import math
 
 from DistanceFunctions import *
+from FuzzyRelatedFunctions import *
 
 def main():
     targetTemp = float(input('Enter Target Temperature: '))
