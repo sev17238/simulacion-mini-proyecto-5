@@ -21,8 +21,9 @@ This project features:
 ## Instalation
 1. Clone this repo with `https://github.com/sev17238/simulacion-mini-proyecto-5.git`
 2. Go to the project directory
-3. Run `mainSimulation.py`
-4. Have FUN!
+3. Run `mainSimulationGUI.py`
+4. Choose the 'Draw points' option
+5. After the simulation, erase everything and give it another try.
 
 ## References
 - https://www.geeksforgeeks.org/fuzzy-logic-introduction/
