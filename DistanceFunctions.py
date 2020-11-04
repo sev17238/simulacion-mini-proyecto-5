@@ -15,6 +15,7 @@ import numpy as np
 import random
 import math
 
+
 def trimf(x, points):
     pointA = points[0]
     pointB = points[1]
@@ -49,7 +50,7 @@ def trapmf(x, points):
 
 
 def getSlope(x1, y1, x2, y2):
-    #Avoid zero division error of vertical line for shouldered trapmf
+    # Avoid zero division error of vertical line for shouldered trapmf
     try:
         slope = (y2 - y1) / (x2 - x1)
     except ZeroDivisionError:
@@ -76,13 +77,12 @@ def getTrimfPlots(start, end, points):
     slopeAB = getSlope(pointA, 0, pointB, 1)
     slopeBC = getSlope(pointB, 1, pointC, 0)
     yInterceptAB = getYIntercept(pointA, 0, pointB, 1)
-    yInterceptBC = getYIntercept(pointB, 1, pointC
-    , 0)
+    yInterceptBC = getYIntercept(pointB, 1, pointC, 0)
     for i in range(pointA, pointB):
         plots[i] = slopeAB * i + yInterceptAB
     for i in range(pointB, pointC):
         plots[i] = slopeBC * i + yInterceptBC
-    
+
     return plots
 
 
@@ -112,6 +112,7 @@ def getTrapmfPlots(start, end, points, shoulder=None):
         plots[i] = slopeCD * i + yInterceptCD
     return plots
 
+
 def getCentroid(aggregatedPlots):
     n = len(aggregatedPlots)
     xAxis = list(range(n))
@@ -121,6 +122,3 @@ def getCentroid(aggregatedPlots):
         centroidNum += xAxis[i] * aggregatedPlots[i]
         centroidDenum += aggregatedPlots[i]
     return centroidNum / centroidDenum
-
-
-

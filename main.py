@@ -17,6 +17,7 @@ import math
 
 from DistanceFunctions import *
 
+
 def main():
     targetTemp = float(input('Enter Target Temperature: '))
     currentTemp = float(input('Enter Current Temperature: '))
@@ -123,6 +124,3 @@ def fisAggregation(rules, pcc, pcnc, pch):
 
 if __name__ == "__main__":
     main()
-
-
-
