@@ -21,6 +21,7 @@ import random
 import math
 ########IMPORTS ZONE --------------------------------------------------------------------------
 
+########FUNCTIONS ZONE ------------------------------------------------------------------------ 
 def turningAngle(robotPosition, ballPosition, robotAngleView):
     '''returns the angle to turn and the direction of that angle.'''
     xr, yr = robotPosition

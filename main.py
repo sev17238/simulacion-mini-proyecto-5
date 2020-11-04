@@ -2,21 +2,27 @@
 # Guatemala, noviembre del 2020
 ###################################################
 # Modelacion y simulacion
-# Diego Sevilla 17238
 # Alejandro Tejada 17584
+# Diego Sevilla 17238
 ###################################################
-
+# Modulo de funciones para calculos de distancia
+###################################################
 # Refs:
-# https://gist.github.com/ryangmolina/e1c87509b6919ac8aaf3eceb315d3e5e
 # https://pythonhosted.org/scikit-fuzzy/auto_examples/plot_tipping_problem_newapi.html
 # https://vpetro.io/fuzzylogic/fuzzy_mehaan_joy.html
+# https://gist.github.com/ryangmolina/e1c87509b6919ac8aaf3eceb315d3e5e
+# https://www.geeksforgeeks.org/horn-clauses-in-deductive-databases/
+# http://aima.cs.berkeley.edu/python/logic.html 
+# https://boxbase.org/entries/2018/oct/8/horn-clauses-imperative-ir/
 
+######IMPORTS ZONE ---------------------------------------------------------------------------
 import numpy as np
 import random
 import math
 
 from DistanceFunctions import *
 from FuzzyRelatedFunctions import *
+########IMPORTS ZONE --------------------------------------------------------------------------
 
 def main():
     targetTemp = float(input('Enter Target Temperature: '))
