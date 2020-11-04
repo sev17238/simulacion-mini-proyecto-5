@@ -11,9 +11,8 @@
 # https://pythonhosted.org/scikit-fuzzy/auto_examples/plot_tipping_problem_newapi.html
 # https://vpetro.io/fuzzylogic/fuzzy_mehaan_joy.html
 # https://gist.github.com/ryangmolina/e1c87509b6919ac8aaf3eceb315d3e5e
-# https://www.geeksforgeeks.org/horn-clauses-in-deductive-databases/
 # http://aima.cs.berkeley.edu/python/logic.html 
-# https://boxbase.org/entries/2018/oct/8/horn-clauses-imperative-ir/
+
 
 ######IMPORTS ZONE ---------------------------------------------------------------------------
 import numpy as np
@@ -156,7 +155,10 @@ def generator2DFunctions(points):
 
     return inner2DFunction
 
+
 ### HORN Clauses
+# https://www.geeksforgeeks.org/horn-clauses-in-deductive-databases/
+# https://boxbase.org/entries/2018/oct/8/horn-clauses-imperative-ir/
 def hornAND(fa1, fa2, fc3):
     def innerHornAND(ds,rs,es): return min(min(fa1(ds), fa2(ds)), fc3(es))
     return innerHornAND
@@ -201,14 +203,14 @@ fuzzyRotationOutput = lambda ds, rs, es : max( ### fuzzy output for rotation
     hornR2(ds,rs,es)
 )
 
-def fuzzyDistance(dBall, ballRotation):
+def fuzzyDistance(ballMovement, ballRotation):
     '''returns fuzzy distance to travel'''
     xs = np.linspace(0, 5, 120)
-    ys = [fuzzyDistanceOutput(dBall, ballRotation, x) for x in xs]
+    ys = [fuzzyDistanceOutput(ballMovement, ballRotation, x) for x in xs]
     return np.sum(xs * ys) / np.sum(ys) 
 
-def fuzzyRotation(dBall, ballRotation):
+def fuzzyRotation(ballMovement, ballRotation):
     '''returns fuzzy rotation to execute'''
     xs = np.linspace(0, 10, 120)
-    ys = [fuzzyDistanceOutput(dBall, ballRotation, x) for x in xs]
+    ys = [fuzzyDistanceOutput(ballMovement, ballRotation, x) for x in xs]
     return np.sum(xs * ys) / np.sum(ys) 

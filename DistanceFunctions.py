@@ -11,9 +11,7 @@
 # https://pythonhosted.org/scikit-fuzzy/auto_examples/plot_tipping_problem_newapi.html
 # https://vpetro.io/fuzzylogic/fuzzy_mehaan_joy.html
 # https://gist.github.com/ryangmolina/e1c87509b6919ac8aaf3eceb315d3e5e
-# https://www.geeksforgeeks.org/horn-clauses-in-deductive-databases/
 # http://aima.cs.berkeley.edu/python/logic.html 
-# https://boxbase.org/entries/2018/oct/8/horn-clauses-imperative-ir/
 
 ######IMPORTS ZONE ---------------------------------------------------------------------------
 import numpy as np
@@ -22,6 +20,21 @@ import math
 ########IMPORTS ZONE --------------------------------------------------------------------------
 
 ########FUNCTIONS ZONE ------------------------------------------------------------------------ 
+
+def read_integer():
+    """ Asks for an integer value and return that value.
+        If the input value is not an integer, the function asks for it again """
+    while True:
+        valor = input("Choose an option: ")
+        try:
+            valor = int(valor)
+            return valor
+        except ValueError:
+            print("")
+            print("¡Haa haaaa! ¡¿Didn't explode right?! ¡Try again! xp")
+            print("")
+
+
 def turningAngle(robotPosition, ballPosition, robotAngleView):
     '''returns the angle to turn and the direction of that angle.'''
     xr, yr = robotPosition
