@@ -8,6 +8,8 @@
 
 # Refs:
 # https://gist.github.com/ryangmolina/e1c87509b6919ac8aaf3eceb315d3e5e
+# https://pythonhosted.org/scikit-fuzzy/auto_examples/plot_tipping_problem_newapi.html
+# https://vpetro.io/fuzzylogic/fuzzy_mehaan_joy.html
 
 import numpy as np
 import random
